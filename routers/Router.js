@@ -1,0 +1,25 @@
+const express = require("express");
+const ConsultantRouter = require("./consultant_router");
+const IntrestRouter = require("./intrested_router");
+const PropertyTypeRouter = require("./property_type_router");
+const PropertyStatusRouter = require("./property_status_router");
+const PropertyRouter = require("./property_router");
+const AboutUsRouter = require("./about_us_router");
+const BlogCategoryRouter = require("./blog_category_router");
+const BlogRouter = require("./blog_router");
+const TestimonialRouter = require("./testimonial_router");
+const WhyChoseRouter = require("./why_chose_router");
+const Router = express();
+
+Router.use("/property", PropertyRouter);
+Router.use("/consultant", ConsultantRouter);
+Router.use("/intrest", IntrestRouter);
+Router.use("/property-status", PropertyStatusRouter);
+Router.use("/property-type", PropertyTypeRouter);
+Router.use("/about-us", AboutUsRouter);
+Router.use("/blog-category", BlogCategoryRouter);
+Router.use("/blog", BlogRouter);
+Router.use("/testimonial", TestimonialRouter);
+Router.use("/why-chose", WhyChoseRouter);
+
+module.exports = Router;
