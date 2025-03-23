@@ -7,7 +7,7 @@ const database = require("./config/db");
 
 //Server Terms
 const app = express();
-const port = 8181;
+const port = 8080;
 
 //Applycation Middleware
 app.use(express.json());
