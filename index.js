@@ -38,6 +38,6 @@ app.get("/health", (req, res) => {
 app.use("/api", Router);
 app.use("/uploads", express.static("uploads"));
 
-app.listen(8080, "localhost", () => {
+app.listen(8080, "0.0.0.0", () => {
   console.log(`Server Run Port: ${port}`);
 });
