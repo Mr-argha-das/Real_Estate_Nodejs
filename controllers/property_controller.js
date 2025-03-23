@@ -17,12 +17,18 @@ const createProperty = async (req, res) => {
       near_by,
       latitude,
       longitude,
+      old_permit_image,
       old_permit_number,
       old_permit_description,
       comerical,
       off_plan,
       image,
       location,
+      communities,
+      developers,
+      beds,
+      shower,
+      sqr_foot,
     } = req.body;
 
     // Check if any required field is missing
@@ -42,12 +48,14 @@ const createProperty = async (req, res) => {
       !near_by ||
       !latitude ||
       !longitude ||
+      !old_permit_image ||
       !old_permit_number ||
       !old_permit_description ||
-      !comerical ||
-      !off_plan ||
       !image ||
-      !location
+      !location ||
+      !beds ||
+      !shower ||
+      !sqr_foot
     ) {
       return res.status(400).send({
         status: false,
@@ -121,19 +129,28 @@ const getAllProperties = async (req, res) => {
 
 const getProperty = async (req, res) => {
   try {
-    const property = await Property.findById(req.params.id);
-    if (!property)
-      return res
-        .status(404)
-        .send({ status: false, message: "Property not found" });
+    const property = await Property.findOne({
+      seo_title: req.params.seo_title,
+    });
+
+    if (!property) {
+      return res.status(404).send({
+        status: false,
+        message: "Property not found",
+      });
+    }
+
     return res.status(200).send({
       status: true,
       message: "Property retrieved successfully",
       data: property,
     });
   } catch (error) {
-    console.error("Fetch error:", error);
-    res.status(400).send({ status: false, message: error.message });
+    console.error("Fetch error:", error); // Log error for debugging
+    return res.status(400).send({
+      status: false,
+      message: error.message || "An error occurred while fetching the property",
+    });
   }
 };
 

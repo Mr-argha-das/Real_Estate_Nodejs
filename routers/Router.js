@@ -9,12 +9,16 @@ const BlogCategoryRouter = require("./blog_category_router");
 const BlogRouter = require("./blog_router");
 const TestimonialRouter = require("./testimonial_router");
 const WhyChoseRouter = require("./why_chose_router");
+const DeveloperRouter = require("./developers_routes");
+const CommunitiesRouter = require("./communities_routes");
 const Router = express();
 
 Router.use("/property", PropertyRouter);
 Router.use("/consultant", ConsultantRouter);
 Router.use("/intrest", IntrestRouter);
 Router.use("/property-status", PropertyStatusRouter);
+Router.use("/developer", DeveloperRouter);
+Router.use("/communities", CommunitiesRouter);
 Router.use("/property-type", PropertyTypeRouter);
 Router.use("/about-us", AboutUsRouter);
 Router.use("/blog-category", BlogCategoryRouter);

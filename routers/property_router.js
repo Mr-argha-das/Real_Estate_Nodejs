@@ -17,7 +17,7 @@ PropertyRouter.post(
 PropertyRouter.get("/getOffPlan", propertyController.getOffPlanProperty);
 PropertyRouter.get("/getRandom", propertyController.getRandomProperty);
 PropertyRouter.get("/", propertyController.getAllProperties);
-PropertyRouter.get("/:id", propertyController.getProperty);
+PropertyRouter.get("/:seo_title", propertyController.getProperty);
 
 PropertyRouter.put(
   "/:id",
