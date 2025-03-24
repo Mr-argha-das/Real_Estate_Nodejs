@@ -10,7 +10,7 @@ const propertySchema = new mongoose.Schema(
     permit_number: { type: String, required: true },
     property_type: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "property-types",
+      ref: "property-type",
       required: true,
     },
     property_status: {

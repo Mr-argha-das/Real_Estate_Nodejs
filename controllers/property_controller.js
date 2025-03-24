@@ -1,4 +1,5 @@
 const Property = require("../models/property_model");
+const PropertyType = require("../models/property_type_model");
 const mongoose = require("mongoose");
 
 const createProperty = async (req, res) => {
@@ -288,6 +289,44 @@ const getRandomProperty = async (req, res) => {
   }
 };
 
+const propertyFillter = async (req, res) => {
+  try {
+    const filters = {};
+    console.log(req.query.property_type);
+
+    if (req.query.property_type) {
+      filters.property_type = req.query.property_type;
+    }
+    if (req.query.property_status) {
+      filters.property_status = req.query.property_status;
+    }
+    if (req.query.comerical) {
+      filters.comerical = req.query.comerical;
+    }
+    if (req.query.beds) {
+      filters.beds = req.query.beds;
+    }
+
+    const properties = await Property.find(filters)
+      .populate("property_type")
+      .populate("property_status");
+
+    console.log(properties);
+    if (properties.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No properties found matching the search criteria" });
+    }
+
+    res.status(200).json({
+      properties,
+    });
+  } catch (error) {
+    console.error("Error occurred in /search:", error);
+    res.status(500).json({ error: "Server error, please try again later." });
+  }
+};
+
 module.exports = {
   createProperty,
   getAllProperties,
@@ -296,4 +335,5 @@ module.exports = {
   deleteProperty,
   getOffPlanProperty,
   getRandomProperty,
+  propertyFillter,
 };
