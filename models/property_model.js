@@ -22,11 +22,13 @@ const propertySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "developers",
       required: false,
+      default: null,
     },
     communities: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "communities",
       required: false,
+      default: null,
     },
     consultant: {
       type: mongoose.Schema.Types.ObjectId,

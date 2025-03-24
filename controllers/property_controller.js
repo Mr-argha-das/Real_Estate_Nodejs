@@ -1,7 +1,9 @@
 const Property = require("../models/property_model");
+const mongoose = require("mongoose");
+
 const createProperty = async (req, res) => {
   try {
-    const {
+    let {
       title,
       seo_title,
       seo_description,
@@ -31,7 +33,7 @@ const createProperty = async (req, res) => {
       sqr_foot,
     } = req.body;
 
-    // Check if any required field is missing
+    // Check if required fields are missing
     if (
       !title ||
       !seo_title ||
@@ -57,23 +59,73 @@ const createProperty = async (req, res) => {
       !shower ||
       !sqr_foot
     ) {
-      return res.status(400).send({
+      return res.status(400).json({
         status: false,
-        message: "All fields are required",
+        message: "All required fields must be provided",
       });
     }
 
-    const property = new Property(req.body);
+    // Validate ObjectId fields (communities & developers)
+    if (communities && !mongoose.Types.ObjectId.isValid(communities)) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid communities ID",
+      });
+    }
+    if (developers && !mongoose.Types.ObjectId.isValid(developers)) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid developers ID",
+      });
+    }
+
+    // Convert empty strings to null
+    communities = communities || null;
+    developers = developers || null;
+
+    const property = new Property({
+      title,
+      seo_title,
+      seo_description,
+      description,
+      refernce_number,
+      permit_number,
+      property_type,
+      property_status,
+      consultant,
+      price,
+      features,
+      amenities,
+      near_by,
+      latitude,
+      longitude,
+      old_permit_image,
+      old_permit_number,
+      old_permit_description,
+      comerical,
+      off_plan,
+      image,
+      location,
+      communities,
+      developers,
+      beds,
+      shower,
+      sqr_foot,
+    });
+
     await property.save();
 
-    return res.status(201).send({
+    return res.status(201).json({
       status: true,
       message: "Property created successfully",
       data: property,
     });
   } catch (error) {
-    console.error("Create error:", error);
-    return res.status(500).send({ status: false, message: error.message });
+    console.error("Create Property Error:", error);
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
   }
 };
 
