@@ -53,7 +53,7 @@ const getCommunitie = async (req, res) => {
       data: communitie,
     });
   } catch (error) {
-    console.error("Fetch error:", error);
+    console.log("Fetch error:", error);
     res.status(400).json({ status: false, message: error.message });
   }
 };

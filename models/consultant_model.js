@@ -8,12 +8,6 @@ const consultantSchema = new mongoose.Schema(
       type: String,
       unique: true,
       trime: true,
-      // validate: {
-      //   validator: function (v) {
-      //     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
-      //   },
-      //   message: "Please enter a valid email",
-      // },
       required: true,
     },
     country_code: { type: String, required: true },

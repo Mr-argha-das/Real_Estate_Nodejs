@@ -54,10 +54,10 @@ const getPropertyStatus = async (req, res) => {
     if (!propertyStatus)
       return res
         .status(404)
-        .send({ status: false, message: "PropertyStatus not found" });
+        .send({ status: false, message: "Property Status not found" });
     return res.status(200).send({
       status: true,
-      message: "PropertyStatus retrieved successfully",
+      message: "Property Status retrieved successfully",
       data: propertyStatus,
     });
   } catch (error) {

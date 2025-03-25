@@ -11,6 +11,7 @@ const blogSchema = new mongoose.Schema(
       ref: "blog-categories",
       required: true,
     },
+    image: { type: String, required: true },
     status: { type: String, default: true },
   },
   { timestamps: true }

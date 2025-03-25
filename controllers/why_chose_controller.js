@@ -20,14 +20,14 @@ const createWhyChose = async (req, res) => {
 
 const getAllWhyChose = async (req, res) => {
   try {
-    const whyChoseEntries = await WhyChose.find().sort({ createdAt: -1 });
-    if (whyChoseEntries.length === 0)
+    const whyChoseEntries = await WhyChose.findOne({ status: true });
+    if (!whyChoseEntries)
       return res
         .status(404)
-        .send({ status: false, message: "No entries found" });
+        .send({ status: false, message: "WhyChooseUs  not found" });
     return res.status(200).send({
       status: true,
-      message: "Entries retrieved successfully",
+      message: "WhyChooseUs retrieved successfully",
       data: whyChoseEntries,
     });
   } catch (error) {

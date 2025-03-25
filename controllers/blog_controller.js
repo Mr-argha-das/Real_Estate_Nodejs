@@ -33,11 +33,15 @@ const getAllBlogs = async (req, res) => {
   }
 };
 
-const getBlogById = async (req, res) => {
+const getBlogByTitle = async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id).populate("category_id");
+    const blog = await Blog.findOne({
+      seo_title: req.params.seo_title,
+    }).populate("category_id");
+
     if (!blog)
       return res.status(404).send({ status: false, message: "Blog not found" });
+
     return res.status(200).send({
       status: true,
       message: "Blog retrieved successfully",
@@ -72,6 +76,6 @@ const getBlogsByCategoryId = async (req, res) => {
 module.exports = {
   createBlog,
   getAllBlogs,
-  getBlogById,
+  getBlogByTitle,
   getBlogsByCategoryId,
 };
