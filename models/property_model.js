@@ -30,6 +30,7 @@ const propertySchema = new mongoose.Schema(
       required: false,
       default: null,
     },
+
     consultant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "consultants",

@@ -11,10 +11,12 @@ const TestimonialRouter = require("./testimonial_router");
 const WhyChoseRouter = require("./why_chose_router");
 const DeveloperRouter = require("./developers_routes");
 const CommunitiesRouter = require("./communities_routes");
+const BannerRouter = require("./banner_router");
 const Router = express();
 
 Router.use("/property", PropertyRouter);
 Router.use("/consultant", ConsultantRouter);
+Router.use("/banner", BannerRouter);
 Router.use("/intrest", IntrestRouter);
 Router.use("/property-status", PropertyStatusRouter);
 Router.use("/developer", DeveloperRouter);

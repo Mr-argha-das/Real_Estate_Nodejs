@@ -162,6 +162,9 @@ const getAllProperties = async (req, res) => {
     }
     const total = await Property.countDocuments(query);
     const properties = await Property.find(query)
+      .populate("property_type")
+      .populate("property_status")
+      .populate("consultant")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
