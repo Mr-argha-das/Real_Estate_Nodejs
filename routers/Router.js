@@ -12,6 +12,9 @@ const WhyChoseRouter = require("./why_chose_router");
 const DeveloperRouter = require("./developers_routes");
 const CommunitiesRouter = require("./communities_routes");
 const BannerRouter = require("./banner_router");
+const FaqRouter = require("./faq_router");
+const ServieRouter = require("./service_router");
+const QueryRouter = require("./query_from_router");
 const Router = express();
 
 Router.use("/property", PropertyRouter);
@@ -27,5 +30,8 @@ Router.use("/blog-category", BlogCategoryRouter);
 Router.use("/blog", BlogRouter);
 Router.use("/testimonial", TestimonialRouter);
 Router.use("/why-chose", WhyChoseRouter);
+Router.use("/faqs", FaqRouter);
+Router.use("/queries", QueryRouter);
+Router.use("/services", ServieRouter);
 
 module.exports = Router;
