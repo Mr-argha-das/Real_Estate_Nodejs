@@ -18,6 +18,7 @@ PropertyRouter.get("/getOffPlan", propertyController.getOffPlanProperty);
 PropertyRouter.get("/getRandom", propertyController.getRandomProperty);
 PropertyRouter.get("/", propertyController.getAllProperties);
 PropertyRouter.get("/seo/:seo_title", propertyController.getProperty);
+PropertyRouter.get("/:id", propertyController.getPropertyById);
 // Search API Endpoint
 PropertyRouter.get("/filters", propertyController.propertyFillter);
 

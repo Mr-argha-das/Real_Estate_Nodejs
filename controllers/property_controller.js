@@ -210,6 +210,33 @@ const getProperty = async (req, res) => {
   }
 };
 
+const getPropertyById = async (req, res) => {
+  try {
+    const property = await Property.findOne({
+      _id: req.params.id,
+    });
+
+    if (!property) {
+      return res.status(404).send({
+        status: false,
+        message: "Property not found",
+      });
+    }
+
+    return res.status(200).send({
+      status: true,
+      message: "Property retrieved successfully",
+      data: property,
+    });
+  } catch (error) {
+    console.error("Fetch error:", error); // Log error for debugging
+    return res.status(400).send({
+      status: false,
+      message: error.message || "An error occurred while fetching the property",
+    });
+  }
+};
+
 const updateProperty = async (req, res) => {
   try {
     if (req.files) {
@@ -331,6 +358,7 @@ const propertyFillter = async (req, res) => {
 };
 
 module.exports = {
+  getPropertyById,
   createProperty,
   getAllProperties,
   getProperty,
