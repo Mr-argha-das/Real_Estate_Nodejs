@@ -7,6 +7,7 @@ const database = require("./config/db");
 const fs = require("fs");
 const path = require("path");
 const archiver = require("archiver");
+const os = require("os");
 
 //Server Terms
 const app = express();
@@ -39,38 +40,21 @@ app.get("/health", (req, res) => {
 
 // API to download the 'uploads' folder as a ZIP file
 app.get("/download-uploadFolder", (req, res) => {
-  const folderPath = path.join(__dirname, "uploads"); // Folder to be zipped
+  const folderPath = path.resolve("uploads"); // Ensure absolute path
   const zipFileName = "uploads.zip";
-  const zipFilePath = path.join(__dirname, zipFileName);
+  const zipFilePath = path.join(os.tmpdir(), zipFileName); // Store in temporary directory
 
   // Ensure the folder exists
   if (!fs.existsSync(folderPath)) {
     return res.status(404).json({ error: "Folder not found" });
   }
 
-  // Create a zip stream
-  const output = fs.createWriteStream(zipFilePath);
+  res.attachment(zipFileName);
   const archive = archiver("zip", { zlib: { level: 9 } });
+  archive.pipe(res);
 
-  // Pipe the archive data to the output file
-  archive.pipe(output);
   archive.directory(folderPath, false);
-  archive.finalize();
-
-  // Once the zip is ready, send it as a response
-  output.on("close", () => {
-    res.download(zipFilePath, zipFileName, (err) => {
-      if (err) {
-        console.error("Download error:", err);
-        res.status(500).json({ error: "Error downloading the file" });
-      }
-
-      // Delete the zip file after download
-      fs.unlinkSync(zipFilePath);
-    });
-  });
-
-  output.on("error", (err) => {
+  archive.finalize().catch((err) => {
     console.error("Error creating zip:", err);
     res.status(500).json({ error: "Error creating zip file" });
   });
