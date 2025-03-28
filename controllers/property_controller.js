@@ -324,12 +324,12 @@ const propertyFillter = async (req, res) => {
     const filters = {};
     console.log(req.query.property_type);
 
-    if (req.query.property_type) {
-      filters.property_type = req.query.property_type;
-    }
-    if (req.query.property_status) {
-      filters.property_status = req.query.property_status;
-    }
+    // if (req.query.property_type) {
+    //   filters.property_type = req.query.property_type;
+    // }
+    // if (req.query.property_status) {
+    //   filters.property_status = req.query.property_status;
+    // }
     if (req.query.comerical) {
       filters.comerical = req.query.comerical;
     }
