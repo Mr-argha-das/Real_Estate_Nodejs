@@ -21,7 +21,6 @@ const querySchema = new mongoose.Schema(
     },
     currency: {
       type: String,
-      enum: ["INR", "USD", "EUR"],
       required: true,
     },
     message: {
