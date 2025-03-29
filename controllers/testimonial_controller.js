@@ -36,7 +36,26 @@ const getAllTestimonials = async (req, res) => {
   }
 };
 
-const updateTestimonial = async (req, res) => {
+const getTestimonialById = async (req, res) => {
+  try {
+    const testimonial = await Testimonial.findById(req.params.id);
+    if (!testimonial) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Testimonial not found" });
+    }
+    return res.status(200).json({
+      status: true,
+      message: "Testimonial retrieved successfully",
+      data: testimonial,
+    });
+  } catch (error) {
+    console.error("Fetch error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+const updateTestimonialById = async (req, res) => {
   try {
     if (req.file) {
       req.body.image = req.file.path;
@@ -44,44 +63,49 @@ const updateTestimonial = async (req, res) => {
     const updatedTestimonial = await Testimonial.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true, runValidators: true }
+      {
+        new: true,
+      }
     );
     if (!updatedTestimonial)
       return res
         .status(404)
-        .send({ status: false, message: "Testimonial not found" });
-    return res.status(200).send({
+        .json({ status: false, message: "Testimonial not found" });
+    return res.status(200).json({
       status: true,
       message: "Testimonial updated successfully",
       data: updatedTestimonial,
     });
   } catch (error) {
     console.error("Update error:", error);
-    res.status(400).send({ status: false, message: error.message });
+    res.status(400).json({ status: false, message: error.message });
   }
 };
 
-const deleteTestimonial = async (req, res) => {
+const deleteTestimonialById = async (req, res) => {
   try {
-    const testimonial = await Testimonial.findByIdAndDelete(req.params.id);
-    if (!testimonial)
+    const deletedTestimonial = await Testimonial.findByIdAndDelete(
+      req.params.id
+    );
+    if (!deletedTestimonial)
       return res
         .status(404)
-        .send({ status: false, message: "Testimonial not found" });
-    return res.status(200).send({
+        .json({ status: false, message: "Testimonial not found" });
+    return res.status(200).json({
       status: true,
       message: "Testimonial deleted successfully",
-      data: testimonial,
+      data: deletedTestimonial,
     });
   } catch (error) {
-    console.error("Delete error:", error);
-    res.status(400).send({ status: false, message: error.message });
+    console.log("error", error.message);
+    res.status(400).json({ status: false, message: error.message });
   }
 };
 
 module.exports = {
   createTestimonial,
   getAllTestimonials,
-  updateTestimonial,
-  deleteTestimonial,
+  getTestimonialById,
+  updateTestimonialById,
+  deleteTestimonialById,
 };

@@ -15,7 +15,7 @@ const createBanner = async (req, res) => {
   }
 };
 
-// findOne({ status: true });
+// ;
 const getBanners = async (req, res) => {
   try {
     const banners = await Banner.find();
@@ -25,52 +25,76 @@ const getBanners = async (req, res) => {
   }
 };
 
-// const getAllWhyChose = async (req, res) => {
-//   try {
-//     const whyChoseEntries = await WhyChose.findOne({ status: true });
-//     if (!whyChoseEntries)
-//       return res
-//         .status(404)
-//         .send({ status: false, message: "WhyChooseUs  not found" });
-//     return res.status(200).send({
-//       status: true,
-//       message: "WhyChooseUs retrieved successfully",
-//       data: whyChoseEntries,
-//     });
-//   } catch (error) {
-//     console.error("Fetch error:", error);
-//     res.status(400).send({ status: false, message: error.message });
-//   }
-// };
+const getBannerById = async (req, res) => {
+  try {
+    const banner = await Banner.findById(req.params.id);
+    if (!banner) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Banner not found" });
+    }
+    return res.status(200).json({
+      status: true,
+      message: "Banner retrieved successfully",
+      data: banner,
+    });
+  } catch (error) {
+    console.error("Fetch error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
 
-// const updateWhyChose = async (req, res) => {
-//   try {
-//     if (req.files) {
-//       req.body.small_features = req.files.map((file) => file.path); // Update image paths
-//     }
-//     const updatedWhyChose = await WhyChose.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       { new: true }
-//     );
-//     if (!updatedWhyChose)
-//       return res
-//         .status(404)
-//         .send({ status: false, message: "Entry not found" });
-//     return res.status(200).send({
-//       status: true,
-//       message: "Entry updated successfully",
-//       data: updatedWhyChose,
-//     });
-//   } catch (error) {
-//     console.error("Update error:", error);
-//     res.status(400).send({ status: false, message: error.message });
-//   }
-// };
+const updateBannerById = async (req, res) => {
+  try {
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    const updatedBanner = await Banner.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!updatedBanner)
+      return res
+        .status(404)
+        .json({ status: false, message: "Banner not found" });
+    return res.status(200).json({
+      status: true,
+      message: "Banner updated successfully",
+      data: updatedBanner,
+    });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+const deleteBannerById = async (req, res) => {
+  try {
+    const deletedBanner = await Banner.findByIdAndDelete(req.params.id);
+    if (!deletedBanner)
+      return res
+        .status(404)
+        .json({ status: false, message: "Banner not found" });
+    return res.status(200).json({
+      status: true,
+      message: "Banner deleted successfully",
+      data: deletedBanner,
+    });
+  } catch (error) {
+    console.log("error", error.message);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
 
 module.exports = {
   createBanner,
   getBanners,
+  getBannerById,
+  updateBannerById,
+  deleteBannerById,
   //   getAllWhyChose,
   //   updateWhyChose,
 };

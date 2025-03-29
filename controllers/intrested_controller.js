@@ -46,28 +46,49 @@ const getAllIntresteds = async (req, res) => {
   }
 };
 
-const updateIntrested = async (req, res) => {
+const getInterestById = async (req, res) => {
+  try {
+    const Interest = await Intrested.findById(req.params.id);
+    if (!Interest) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Interest not found" });
+    }
+    return res.status(200).json({
+      status: true,
+      message: "Interest retrieved successfully",
+      data: Interest,
+    });
+  } catch (error) {
+    console.error("Fetch error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+const updateInterestById = async (req, res) => {
   try {
     if (req.file) {
       req.body.image = req.file.path;
     }
-    const updatedIntrested = await Intrested.findByIdAndUpdate(
+    const updatedInterest = await Intrested.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true, runValidators: true }
+      {
+        new: true,
+      }
     );
-    if (!updatedIntrested)
+    if (!updatedInterest)
       return res
         .status(404)
-        .send({ status: false, message: "Intrested not found" });
-    return res.status(200).send({
+        .json({ status: false, message: "Interest not found" });
+    return res.status(200).json({
       status: true,
-      message: "Intrested updated successfully",
-      data: updatedIntrested,
+      message: "Interest updated successfully",
+      data: updatedInterest,
     });
   } catch (error) {
     console.error("Update error:", error);
-    res.status(400).send({ status: false, message: error.message });
+    res.status(400).json({ status: false, message: error.message });
   }
 };
 
@@ -92,6 +113,7 @@ const deleteIntrested = async (req, res) => {
 module.exports = {
   createIntrested,
   getAllIntresteds,
-  updateIntrested,
+  getInterestById,
+  updateInterestById,
   deleteIntrested,
 };

@@ -10,4 +10,14 @@ BlogRouter.get(
 );
 BlogRouter.get("/seo/:seo_title", blogController.getBlogByTitle);
 
+BlogRouter.get("/:id", blogController.getBlogById);
+
+BlogRouter.put(
+  "/:id",
+  // upload.single("image"),
+  blogController.updateBlogById
+);
+
+BlogRouter.delete("/:id", blogController.deleteBlogById);
+
 module.exports = BlogRouter;

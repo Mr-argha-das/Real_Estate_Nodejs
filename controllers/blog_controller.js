@@ -73,9 +73,66 @@ const getBlogsByCategoryId = async (req, res) => {
   }
 };
 
+const getBlogById = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ status: false, message: "Blog not found" });
+    }
+    return res.status(200).json({
+      status: true,
+      message: "Blog retrieved successfully",
+      data: blog,
+    });
+  } catch (error) {
+    console.error("Fetch error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+const updateBlogById = async (req, res) => {
+  try {
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updatedBlog)
+      return res.status(404).json({ status: false, message: "Blog not found" });
+    return res.status(200).json({
+      status: true,
+      message: "Blog updated successfully",
+      data: updatedBlog,
+    });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+const deleteBlogById = async (req, res) => {
+  try {
+    const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
+    if (!deletedBlog)
+      return res.status(404).json({ status: false, message: "Blog not found" });
+    return res.status(200).json({
+      status: true,
+      message: "Blog deleted successfully",
+      data: deletedBlog,
+    });
+  } catch (error) {
+    console.log("error", error.message);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
 module.exports = {
   createBlog,
   getAllBlogs,
   getBlogByTitle,
   getBlogsByCategoryId,
+  getBlogById,
+  updateBlogById,
+  deleteBlogById,
 };

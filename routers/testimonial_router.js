@@ -1,14 +1,22 @@
-const express = require("express")
-const TestimonialsRouter = express()
-const testimonialsController = require("../controllers/testimonial_controller")
-const upload = require("../service/img_service")
+const express = require("express");
+const TestimonialsRouter = express();
+const testimonialsController = require("../controllers/testimonial_controller");
+const upload = require("../service/img_service");
 
-TestimonialsRouter.post("/",upload.single("image") ,testimonialsController.createTestimonial)
-TestimonialsRouter.get("/",testimonialsController.getAllTestimonials)
-TestimonialsRouter.put("/:id",upload.array("image",5) ,testimonialsController.updateTestimonial)
-TestimonialsRouter.delete("/:id",testimonialsController.deleteTestimonial)
+TestimonialsRouter.post(
+  "/",
+  upload.single("image"),
+  testimonialsController.createTestimonial
+);
+TestimonialsRouter.get("/", testimonialsController.getAllTestimonials);
+TestimonialsRouter.get("/:id", testimonialsController.getTestimonialById);
 
-module.exports = TestimonialsRouter
+TestimonialsRouter.put(
+  "/:id",
+  // upload.single("image"),
+  testimonialsController.updateTestimonialById
+);
 
+TestimonialsRouter.delete("/:id", testimonialsController.deleteTestimonialById);
 
-
+module.exports = TestimonialsRouter;

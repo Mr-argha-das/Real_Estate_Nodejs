@@ -8,6 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const archiver = require("archiver");
 const os = require("os");
+const Banner = require("./models/banner_model"); // Import your Mongoose model
 
 //Server Terms
 const app = express();
@@ -36,6 +37,35 @@ database();
 
 app.get("/health", (req, res) => {
   res.status(200).send("Healthy");
+});
+
+// DELETE a specific image from a banner
+app.delete("/api/banner/:bannerId/image/:imgIndex", async (req, res) => {
+  try {
+    const { bannerId, imgIndex } = req.params;
+
+    // Find the banner by ID
+    const banner = await Banner.findById(bannerId);
+    if (!banner) {
+      return res.status(404).json({ message: "Banner not found" });
+    }
+
+    // Check if the image index is valid
+    if (imgIndex < 0 || imgIndex >= banner.images.length) {
+      return res.status(400).json({ message: "Invalid image index" });
+    }
+
+    // Remove the image from the array
+    banner.images.splice(imgIndex, 1);
+
+    // Save the updated banner
+    await banner.save();
+
+    res.json({ message: "Image deleted successfully", banner });
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 // API to download the 'uploads' folder as a ZIP file

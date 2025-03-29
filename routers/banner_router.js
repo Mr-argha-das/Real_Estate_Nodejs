@@ -5,8 +5,8 @@ const BannerRouter = express();
 
 BannerRouter.post("/", BannerController.createBanner);
 BannerRouter.get("/", BannerController.getBanners);
-
-// WhyChoseRouter.get("/", whyChoseController.getAllWhyChose);
-// WhyChoseRouter.put("/:id", upload.array("small_features", 5), whyChoseController.updateWhyChose);
+BannerRouter.get("/:id", BannerController.getBannerById);
+BannerRouter.delete("/:id", BannerController.deleteBannerById);
+// BannerRouter.put("/:id", BannerController.updateBannerById);
 
 module.exports = BannerRouter;
