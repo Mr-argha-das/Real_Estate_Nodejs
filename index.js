@@ -90,6 +90,61 @@ app.get("/download-uploadFolder", (req, res) => {
   });
 });
 
+const uploadsFolder = path.join(__dirname, "uploads");
+
+// API to download all images as a ZIP
+app.get("/download-images", (req, res) => {
+  // Check if the uploads folder exists
+  if (!fs.existsSync(uploadsFolder)) {
+    return res.status(404).send("Uploads folder not found");
+  }
+
+  // Create a zip file
+  const zipFilename = "images.zip";
+  const zipPath = path.join(__dirname, zipFilename);
+
+  // Create a file to stream the zip to
+  const output = fs.createWriteStream(zipPath);
+  const archive = archiver("zip", {
+    zlib: { level: 9 }, // Set compression level (optional)
+  });
+
+  // Pipe the archive data to the output file
+  archive.pipe(output);
+
+  // Append files from the "uploads" folder (only image files)
+  fs.readdirSync(uploadsFolder).forEach((file) => {
+    const filePath = path.join(uploadsFolder, file);
+    const ext = path.extname(file).toLowerCase();
+
+    // Check if the file is an image based on the extension
+    if ([".jpg", ".jpeg", ".png", ".gif", ".bmp"].includes(ext)) {
+      archive.file(filePath, { name: file });
+    }
+  });
+
+  // Finalize the zip file
+  archive.finalize();
+
+  // Listen for the completion event and send the zip file as a response
+  output.on("close", () => {
+    res.download(zipPath, zipFilename, (err) => {
+      if (err) {
+        console.error("Error sending file:", err);
+        return res.status(500).send("Error downloading file");
+      }
+
+      // Delete the zip file after download
+      fs.unlinkSync(zipPath);
+    });
+  });
+
+  // Handle errors during the archiving process
+  archive.on("error", (err) => {
+    res.status(500).send({ error: err.message });
+  });
+});
+
 // Routers
 app.use("/api", Router);
 app.use("/uploads", express.static("uploads"));
