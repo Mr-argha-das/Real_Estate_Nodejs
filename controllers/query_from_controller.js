@@ -10,6 +10,12 @@ const createQuery = async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
+    if (!acceptedPrivacy) {
+      return res
+        .status(400)
+        .json({ error: "Please Accept the Privacy Policy" });
+    }
+
     const query = new Query({
       name,
       email,

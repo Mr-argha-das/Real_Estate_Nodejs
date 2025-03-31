@@ -10,6 +10,7 @@ const createConsultant = async (req, res) => {
       email,
       country_code,
       phone,
+      language,
       whatsapp_number,
       profile_pic,
     } = req.body;
@@ -26,6 +27,7 @@ const createConsultant = async (req, res) => {
       email,
       country_code,
       phone,
+      language,
       whatapp_number: whatsapp_number,
       profile_pic, // Multer handles files
     });
@@ -39,36 +41,6 @@ const createConsultant = async (req, res) => {
     res.status(500).json({ message: "Internal server error", error });
   }
 };
-
-// const createConsultant = async (req, res) => {
-//   try {
-//     if (
-//       !req.body.name ||
-//       !req.body.email ||
-//       !req.body.country_code ||
-//       !req.body.phone
-//     ) {
-//       return res.status(400).send({
-//         status: false,
-//         message: "Name, Email, Country Code, and Phone are required!",
-//       });
-//     }
-//     if (req.file) {
-//       req.body.profile_pic = req.file.path;
-//     }
-//     console.log(req.file.path);
-//     const consultant = new Consultant(req.body);
-//     await consultant.save();
-//     return res.status(201).send({
-//       status: true,
-//       message: "Consultant created successfully",
-//       data: consultant,
-//     });
-//   } catch (error) {
-//     console.error("Create error:", error);
-//     res.status(400).send({ status: false, message: error.message });
-//   }
-// };
 
 const getAllConsultants = async (req, res) => {
   try {
@@ -90,7 +62,6 @@ const getAllConsultants = async (req, res) => {
       status: true,
       message: "Consultants retrieved successfully",
       data: consultants,
-      // pagination: { total, page, limit }
     });
   } catch (error) {
     console.error("Fetch error:", error);

@@ -11,6 +11,7 @@ const consultantSchema = new mongoose.Schema(
       required: true,
     },
     country_code: { type: String, required: true },
+    language: { type: String, required: true },
     phone: { type: Number, required: true },
     whatapp_number: { type: String, required: false },
     profile_pic: { type: String, required: false },
