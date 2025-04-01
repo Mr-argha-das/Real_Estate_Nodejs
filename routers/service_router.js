@@ -4,6 +4,7 @@ const {
   getAllServices,
   getServiceById,
   deleteServiceById,
+  updateServiceById,
 } = require("../controllers/service_controllers");
 
 const ServieRouter = express();
@@ -12,6 +13,7 @@ const ServieRouter = express();
 ServieRouter.post("/", createService);
 ServieRouter.get("/", getAllServices);
 ServieRouter.get("/:id", getServiceById);
+ServieRouter.put("/:id", updateServiceById);
 ServieRouter.delete("/:id", deleteServiceById);
 
 module.exports = ServieRouter;

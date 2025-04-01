@@ -53,4 +53,69 @@ const createPreBook = async (req, res) => {
   }
 };
 
-module.exports = { createPreBook };
+// Get all PreBook
+const getAllPreBook = async (req, res) => {
+  try {
+    const preBook = await PreBook.find();
+    res.status(200).json(preBook);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get PreBook by ID
+const getPreBookById = async (req, res) => {
+  try {
+    const preBook = await PreBook.findById(req.params.id);
+    if (!preBook) {
+      return res.status(404).json({ message: "PreBook not found" });
+    }
+    res.status(200).json(preBook);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updatePreBookById = async (req, res) => {
+  try {
+    const updatedPreBook = await PreBook.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!updatedPreBook)
+      return res
+        .status(404)
+        .json({ status: false, message: "PreBook not found" });
+    return res.status(200).json({
+      status: true,
+      message: "PreBook updated successfully",
+      data: updatedPreBook,
+    });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+// Delete PreBook by ID
+const deletePreBookById = async (req, res) => {
+  try {
+    const preBook = await PreBook.findByIdAndDelete(req.params.id);
+    if (!preBook) {
+      return res.status(404).json({ message: "PreBook not found" });
+    }
+    res.status(200).json({ message: "PreBook deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  createPreBook,
+  deletePreBookById,
+  updatePreBookById,
+  getPreBookById,
+  getAllPreBook,
+};

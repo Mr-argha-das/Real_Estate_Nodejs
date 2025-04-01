@@ -3,13 +3,12 @@ const Service = require("../models/service_model");
 // Create Service
 const createService = async (req, res) => {
   try {
-    console.log(req.body); // Debugging
+    console.log(req.body);
     const { title, shortDesc, image } = req.body;
 
     if (!title || !shortDesc || !image) {
       return res.status(400).json({ error: "All fields are required" });
     }
-
     const service = new Service({ title, short_desc: shortDesc, image });
     await service.save();
 
@@ -42,6 +41,32 @@ const getServiceById = async (req, res) => {
   }
 };
 
+const updateServiceById = async (req, res) => {
+  try {
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    const updatedService = await Service.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!updatedService)
+      return res
+        .status(404)
+        .json({ status: false, message: "Service not found" });
+    return res.status(200).json({
+      status: true,
+      message: "Service updated successfully",
+      data: updatedService,
+    });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
 // Delete Service by ID
 const deleteServiceById = async (req, res) => {
   try {
@@ -60,4 +85,5 @@ module.exports = {
   getAllServices,
   getServiceById,
   deleteServiceById,
+  updateServiceById,
 };

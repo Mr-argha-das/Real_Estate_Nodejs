@@ -3,14 +3,9 @@ const preBookRouter = express();
 const preBookController = require("../controllers/pre_book_controller");
 
 preBookRouter.post("/", preBookController.createPreBook);
-
-// preBookRouter.get("/:id", preBookController.getConsultant);
-// preBookRouter.get("/", preBookController.getAllConsultants);
-// preBookRouter.put(
-//   "/:id",
-//   upload.single("profile_pic"),
-//   preBookController.updateConsultant
-// );
-// preBookRouter.delete("/:id", preBookController.deleteConsultant);
+preBookRouter.get("/", preBookController.getAllPreBook);
+preBookRouter.get("/:id", preBookController.getPreBookById);
+preBookRouter.put("/:id", preBookController.updatePreBookById);
+preBookRouter.delete("/:id", preBookController.deletePreBookById);
 
 module.exports = preBookRouter;
