@@ -32,33 +32,35 @@ const createProperty = async (req, res) => {
       beds,
       shower,
       sqr_foot,
+      video,
     } = req.body;
 
     // Check if required fields are missing
     if (
-      !title ||
-      !seo_title ||
-      !seo_description ||
-      !description ||
-      !refernce_number ||
-      !permit_number ||
-      !property_type ||
-      !property_status ||
-      !consultant ||
-      !price ||
-      !features ||
-      !amenities ||
-      !near_by ||
-      !latitude ||
-      !longitude ||
-      !old_permit_image ||
-      !old_permit_number ||
-      !old_permit_description ||
-      !image ||
-      !location ||
-      !beds ||
-      !shower ||
-      !sqr_foot
+      (!title ||
+        !seo_title ||
+        !seo_description ||
+        !description ||
+        !refernce_number ||
+        !permit_number ||
+        !property_type ||
+        !property_status ||
+        !consultant ||
+        !price ||
+        !features ||
+        !amenities ||
+        !near_by ||
+        !latitude ||
+        !longitude ||
+        !old_permit_image ||
+        !old_permit_number ||
+        !old_permit_description ||
+        !image ||
+        !location ||
+        !beds ||
+        !shower ||
+        !sqr_foot,
+      !video)
     ) {
       return res.status(400).json({
         status: false,
@@ -73,6 +75,7 @@ const createProperty = async (req, res) => {
         message: "Invalid communities ID",
       });
     }
+
     if (developers && !mongoose.Types.ObjectId.isValid(developers)) {
       return res.status(400).json({
         status: false,
@@ -112,6 +115,7 @@ const createProperty = async (req, res) => {
       beds,
       shower,
       sqr_foot,
+      video,
     });
 
     await property.save();
@@ -134,7 +138,7 @@ const getAllProperties = async (req, res) => {
   try {
     let {
       page = 1,
-      limit = 10,
+      limit = 100,
       search = "",
       minPrice,
       maxPrice,
@@ -202,7 +206,7 @@ const getProperty = async (req, res) => {
       data: property,
     });
   } catch (error) {
-    console.error("Fetch error:", error); // Log error for debugging
+    console.error("Fetch error:", error);
     return res.status(400).send({
       status: false,
       message: error.message || "An error occurred while fetching the property",
@@ -242,11 +246,13 @@ const updateProperty = async (req, res) => {
     if (req.files) {
       req.body.image = req.files.map((file) => file.filename);
     }
+
     const updatedProperty = await Property.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
     );
+
     if (!updatedProperty)
       return res
         .status(404)
