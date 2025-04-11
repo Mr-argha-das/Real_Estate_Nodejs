@@ -25,6 +25,7 @@ const createProperty = async (req, res) => {
       old_permit_description,
       comerical,
       off_plan,
+      metro,
       image,
       location,
       communities,
@@ -37,30 +38,29 @@ const createProperty = async (req, res) => {
 
     // Check if required fields are missing
     if (
-      (!title ||
-        !seo_title ||
-        !seo_description ||
-        !description ||
-        !refernce_number ||
-        !permit_number ||
-        !property_type ||
-        !property_status ||
-        !consultant ||
-        !price ||
-        !features ||
-        !amenities ||
-        !near_by ||
-        !latitude ||
-        !longitude ||
-        !old_permit_image ||
-        !old_permit_number ||
-        !old_permit_description ||
-        !image ||
-        !location ||
-        !beds ||
-        !shower ||
-        !sqr_foot,
-      !video)
+      !title ||
+      !seo_title ||
+      !seo_description ||
+      !description ||
+      !refernce_number ||
+      !permit_number ||
+      !property_type ||
+      !property_status ||
+      !consultant ||
+      !price ||
+      !features ||
+      !amenities ||
+      !near_by ||
+      !latitude ||
+      !longitude ||
+      !old_permit_image ||
+      !old_permit_number ||
+      !old_permit_description ||
+      !image ||
+      !location ||
+      !beds ||
+      !shower ||
+      !sqr_foot
     ) {
       return res.status(400).json({
         status: false,
@@ -110,6 +110,7 @@ const createProperty = async (req, res) => {
       off_plan,
       image,
       location,
+      metro,
       communities,
       developers,
       beds,
