@@ -6,6 +6,7 @@ const propertySchema = new mongoose.Schema(
     seo_title: { type: String, required: true },
     seo_description: { type: String, required: true },
     description: { type: String, required: true },
+    table_content: { type: String, required: true },
     refernce_number: { type: String, required: true },
     permit_number: { type: String, required: true },
     property_type: {

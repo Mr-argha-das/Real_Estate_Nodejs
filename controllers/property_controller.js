@@ -33,6 +33,7 @@ const createProperty = async (req, res) => {
       beds,
       shower,
       sqr_foot,
+      table_content,
       video,
     } = req.body;
 
@@ -111,6 +112,7 @@ const createProperty = async (req, res) => {
       image,
       location,
       metro,
+      table_content,
       communities,
       developers,
       beds,
@@ -247,13 +249,11 @@ const updateProperty = async (req, res) => {
     if (req.files) {
       req.body.image = req.files.map((file) => file.filename);
     }
-
     const updatedProperty = await Property.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
     );
-
     if (!updatedProperty)
       return res
         .status(404)
