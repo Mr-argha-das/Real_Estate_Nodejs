@@ -26,6 +26,8 @@ const createProperty = async (req, res) => {
       comerical,
       off_plan,
       metro,
+      unfurnished,
+      sea_front,
       image,
       location,
       communities,
@@ -49,9 +51,9 @@ const createProperty = async (req, res) => {
       !property_status ||
       !consultant ||
       !price ||
-      !features ||
-      !amenities ||
-      !near_by ||
+      // !features ||
+      // !amenities ||
+      // !near_by ||
       !latitude ||
       !longitude ||
       !old_permit_image ||
@@ -112,6 +114,8 @@ const createProperty = async (req, res) => {
       image,
       location,
       metro,
+      unfurnished,
+      sea_front,
       table_content,
       communities,
       developers,

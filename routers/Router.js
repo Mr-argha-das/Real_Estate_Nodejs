@@ -18,6 +18,7 @@ const QueryRouter = require("./query_from_router");
 const FooterContactDetailsRouter = require("./footer_contact_details");
 const ValuationRouter = require("./valuation_router");
 const preBookRouter = require("./pre_book_router");
+const InquiryRoutes = require("./sell_inquiry_router");
 const Router = express();
 
 Router.use("/property", PropertyRouter);
@@ -37,7 +38,7 @@ Router.use("/faqs", FaqRouter);
 Router.use("/queries", QueryRouter);
 Router.use("/services", ServieRouter);
 Router.use("/valuation", ValuationRouter);
-
+Router.use("/inquiry", InquiryRoutes);
 Router.use("/pre-book", preBookRouter);
 Router.use("/footer-contact", FooterContactDetailsRouter);
 

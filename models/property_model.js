@@ -68,6 +68,8 @@ const propertySchema = new mongoose.Schema(
     old_permit_description: { type: String, required: true },
     comerical: { type: Boolean, required: false },
     metro: { type: Boolean, required: false },
+    unfurnished: { type: Boolean, required: false },
+    sea_front: { type: Boolean, required: false },
     off_plan: { type: Boolean, required: false },
     video: { type: String, required: false },
     image: [

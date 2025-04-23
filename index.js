@@ -92,14 +92,11 @@ app.get("/download-uploadFolder", (req, res) => {
 
 const uploadsFolder = path.join(__dirname, "uploads");
 
-// API to download all images as a ZIP
 app.get("/download-images", (req, res) => {
-  // Check if the uploads folder exists
   if (!fs.existsSync(uploadsFolder)) {
     return res.status(404).send("Uploads folder not found");
   }
 
-  // Create a zip file
   const zipFilename = "images.zip";
   const zipPath = path.join(__dirname, zipFilename);
 
