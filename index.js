@@ -69,7 +69,7 @@ app.delete("/api/banner/:bannerId/image/:imgIndex", async (req, res) => {
 });
 
 // API to download the 'uploads' folder as a ZIP file
-app.get("/download-uploadFolder", (req, res) => {
+app.get("/downloadFolder", (req, res) => {
   const folderPath = path.resolve("uploads"); // Ensure absolute path
   const zipFileName = "uploads.zip";
   const zipFilePath = path.join(os.tmpdir(), zipFileName); // Store in temporary directory

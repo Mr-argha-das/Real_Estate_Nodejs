@@ -19,6 +19,7 @@ const FooterContactDetailsRouter = require("./footer_contact_details");
 const ValuationRouter = require("./valuation_router");
 const preBookRouter = require("./pre_book_router");
 const InquiryRoutes = require("./sell_inquiry_router");
+const DownloadRouter = require("./download_router");
 const Router = express();
 
 Router.use("/property", PropertyRouter);
@@ -35,6 +36,7 @@ Router.use("/blog", BlogRouter);
 Router.use("/testimonial", TestimonialRouter);
 Router.use("/why-chose", WhyChoseRouter);
 Router.use("/faqs", FaqRouter);
+
 Router.use("/queries", QueryRouter);
 Router.use("/services", ServieRouter);
 Router.use("/valuation", ValuationRouter);
@@ -42,4 +44,5 @@ Router.use("/inquiry", InquiryRoutes);
 Router.use("/pre-book", preBookRouter);
 Router.use("/footer-contact", FooterContactDetailsRouter);
 
+Router.use("/brochure", DownloadRouter);
 module.exports = Router;

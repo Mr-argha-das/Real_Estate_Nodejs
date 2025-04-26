@@ -22,6 +22,7 @@ const submitInquiry = async (req, res) => {
       email,
       query,
     });
+
     await newInquiry.save();
 
     const Email = "inquiry@dnsdxb.com"; // Your Hostinger SMTP email

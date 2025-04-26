@@ -27,7 +27,6 @@ const getAllServices = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 // Get Service by ID
 const getServiceById = async (req, res) => {
   try {
@@ -40,7 +39,6 @@ const getServiceById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 const updateServiceById = async (req, res) => {
   try {
     if (req.file) {
