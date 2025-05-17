@@ -57,8 +57,8 @@ const createProperty = async (req, res) => {
       !latitude ||
       !longitude ||
       !old_permit_image ||
-      !old_permit_number ||
-      !old_permit_description ||
+      // !old_permit_number ||
+      // !old_permit_description ||
       !image ||
       !location ||
       !beds ||
@@ -248,20 +248,50 @@ const getPropertyById = async (req, res) => {
   }
 };
 
+// const updateProperty = async (req, res) => {
+//   try {
+//     if (req.files) {
+//       req.body.image = req.files.map((file) => file.filename);
+//     }
+//     const updatedProperty = await Property.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true, runValidators: true }
+//     );
+//     if (!updatedProperty)
+//       return res
+//         .status(404)
+//         .send({ status: false, message: "Property not found" });
+//     return res.status(200).send({
+//       status: true,
+//       message: "Property updated successfully",
+//       data: updatedProperty,
+//     });
+//   } catch (error) {
+//     console.error("Update error:", error);
+//     res.status(400).send({ status: false, message: error.message });
+//   }
+// };
+
 const updateProperty = async (req, res) => {
   try {
     if (req.files) {
       req.body.image = req.files.map((file) => file.filename);
     }
+
     const updatedProperty = await Property.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
     );
-    if (!updatedProperty)
-      return res
-        .status(404)
-        .send({ status: false, message: "Property not found" });
+
+    if (!updatedProperty) {
+      return res.status(404).send({
+        status: false,
+        message: "Property not found",
+      });
+    }
+
     return res.status(200).send({
       status: true,
       message: "Property updated successfully",
@@ -269,7 +299,10 @@ const updateProperty = async (req, res) => {
     });
   } catch (error) {
     console.error("Update error:", error);
-    res.status(400).send({ status: false, message: error.message });
+    res.status(400).send({
+      status: false,
+      message: error.message,
+    });
   }
 };
 

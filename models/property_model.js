@@ -6,7 +6,14 @@ const propertySchema = new mongoose.Schema(
     seo_title: { type: String, required: true },
     seo_description: { type: String, required: true },
     description: { type: String, required: true },
-    table_content: { type: String, required: true },
+    // table_content: {
+    //   type: String,
+    //   required: function () {
+    //     return this.isNew;
+    //   },
+    // },
+    table_content: { type: String, default: "" },
+
     refernce_number: { type: String, required: true },
     permit_number: { type: String, required: true },
     property_type: {
@@ -65,7 +72,15 @@ const propertySchema = new mongoose.Schema(
 
     old_permit_image: { type: String, required: true },
     old_permit_number: { type: String, required: true },
-    old_permit_description: { type: String, required: true },
+    // old_permit_description: {
+    //   type: String,
+    //   required: function () {
+    //     return this.isNew;
+    //   },
+    // },
+
+    old_permit_description: { type: String, default: "" },
+
     comerical: { type: Boolean, required: false },
     metro: { type: Boolean, required: false },
     unfurnished: { type: Boolean, required: false },
