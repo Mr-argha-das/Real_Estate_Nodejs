@@ -4,7 +4,8 @@ const nodemailer = require("nodemailer");
 
 const createApplication = async (req, res) => {
   try {
-    const { fullName, email, phone, linkedin, resume, coverLetter } = req.body;
+    const { fullName, email, phone, code, linkedin, resume, coverLetter } =
+      req.body;
     const application = new JobApplication(req.body);
     await application.save();
 
@@ -28,7 +29,7 @@ const createApplication = async (req, res) => {
               <h2>New Job Application</h2>
               <p><strong>Full Name:</strong> ${fullName}</p>
               <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Phone:</strong> ${phone}</p>
+              <p><strong>Phone No:</strong>${code} ${phone}</p>
               <p><strong>Linked In:</strong> ${linkedin}</p>
               <p><strong>Cover Letter:</strong> ${coverLetter}</p>
               <p><strong>Resume:</strong> <a href="${resume}" target="_blank">View Resume</a></p>

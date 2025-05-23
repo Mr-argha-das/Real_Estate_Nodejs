@@ -32,6 +32,7 @@ const propertySchema = new mongoose.Schema(
       required: false,
       default: null,
     },
+
     communities: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "communities",
@@ -44,6 +45,7 @@ const propertySchema = new mongoose.Schema(
       ref: "consultants",
       required: true,
     },
+
     price: { type: String, required: true },
     features: [
       {

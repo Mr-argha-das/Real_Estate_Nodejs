@@ -176,6 +176,8 @@ const getAllProperties = async (req, res) => {
       .populate("property_type")
       .populate("property_status")
       .populate("consultant")
+      .populate("communities")
+      .populate("developers")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
