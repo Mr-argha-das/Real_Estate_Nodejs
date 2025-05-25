@@ -24,6 +24,7 @@ const JobRouter = require("./job_router");
 const jobFormRouter = require("./job_form_router");
 const TeamRouter = require("./team_router");
 const ServicesPageRouter = require("./ServicesPage_router");
+const ContactQueryRouter = require("./conact_query_router");
 
 const Router = express();
 
@@ -45,6 +46,7 @@ Router.use("/jobs", JobRouter);
 Router.use("/jobForm", jobFormRouter);
 Router.use("/team", TeamRouter);
 Router.use("/queries", QueryRouter);
+Router.use("/contactQueries", ContactQueryRouter);
 Router.use("/services", ServieRouter);
 Router.use("/service", ServicesPageRouter);
 Router.use("/valuation", ValuationRouter);
