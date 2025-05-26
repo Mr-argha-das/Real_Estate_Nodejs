@@ -1,4 +1,6 @@
 const PreBook = require("../models/prebook_model");
+const nodemailer = require("nodemailer");
+const Property = require("../models/property_model");
 
 const createPreBook = async (req, res) => {
   try {
@@ -14,6 +16,7 @@ const createPreBook = async (req, res) => {
     } = req.body;
 
     console.log(req.body);
+
     // Validate required fields
     if (
       !name ||
@@ -26,6 +29,12 @@ const createPreBook = async (req, res) => {
       !time
     ) {
       return res.status(400).json({ message: "All fields are required." });
+    }
+
+    // Fetch property by ID
+    const property = await Property.findOne({ _id: property_id });
+    if (!property) {
+      return res.status(404).json({ message: "Property not found." });
     }
 
     // Create a new pre-book entry
@@ -43,9 +52,42 @@ const createPreBook = async (req, res) => {
     // Save to the database
     await newPreBook.save();
 
+    const Email = "inquiry@dnsdxb.com"; // Your Hostinger SMTP email
+    const transporter = nodemailer.createTransport({
+      host: "smtp.hostinger.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: Email,
+        pass: "IN@#$%009q", // Your email password
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Pre Booking Notification" <${Email}>`,
+      to: Email,
+      subject: "Pre Booking",
+      html: `
+        <h3>Booking Details</h3>
+        <ul>
+          <li><strong>Name:</strong> ${name}</li>
+          <li><strong>Phone:</strong> ${country_code} ${phone}</li>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>Date:</strong> ${date}</li>
+          <li><strong>Time:</strong> ${time}</li>
+          <li><strong>Property Name:</strong> ${property.title || "N/A"}</li>
+          <li><strong>Property Location:</strong> ${
+            property.location || "N/A"
+          }</li>
+          <li><strong>Message:</strong> ${message}</li>
+        </ul>
+      `,
+    });
+
     return res.status(201).json({
       message: "Pre-booking created successfully.",
       preBook: newPreBook,
+      property,
     });
   } catch (error) {
     console.error("Error creating pre-booking:", error);

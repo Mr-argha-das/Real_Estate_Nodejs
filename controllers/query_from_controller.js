@@ -1,4 +1,5 @@
 const Query = require("../models/query_form_model");
+const nodemailer = require("nodemailer");
 
 // Create a new query
 const createQuery = async (req, res) => {
@@ -24,6 +25,33 @@ const createQuery = async (req, res) => {
       currency,
       message,
       acceptedPrivacy,
+    });
+
+    const Email = "inquiry@dnsdxb.com"; // Your Hostinger SMTP email
+    const transporter = nodemailer.createTransport({
+      host: "smtp.hostinger.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: Email,
+        pass: "IN@#$%009q", // Your email password
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Inquiry Notification" <${Email}>`,
+      to: Email,
+      subject: "Contact Query",
+      html: `
+            <h3>Query Details</h3>
+            <ul>
+              <li><strong>Name:</strong> ${name}</li>
+              <li><strong>Phone:</strong>${currency} ${phone}</li>
+              <li><strong>Email:</strong> ${email}</li>
+              <li><strong>Subject:</strong> ${subject}</li>
+              <li><strong>Message:</strong> ${message}</li>
+            </ul>
+          `,
     });
 
     await query.save();

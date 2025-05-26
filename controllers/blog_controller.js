@@ -34,6 +34,7 @@ const getAllBlogs = async (req, res) => {
 };
 
 const getBlogByTitle = async (req, res) => {
+  console.log("Fetching blog with title:", req.params.seo_title);
   try {
     const blog = await Blog.findOne({
       seo_title: req.params.seo_title,
