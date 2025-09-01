@@ -69,26 +69,26 @@ app.delete("/api/banner/:bannerId/image/:imgIndex", async (req, res) => {
 });
 
 // API to download the 'uploads' folder as a ZIP file
-app.get("/downloadFolder", (req, res) => {
-  const folderPath = path.resolve("uploads"); // Ensure absolute path
-  const zipFileName = "uploads.zip";
-  const zipFilePath = path.join(os.tmpdir(), zipFileName); // Store in temporary directory
+// app.get("/downloadFolder", (req, res) => {
+//   const folderPath = path.resolve("uploads"); // Ensure absolute path
+//   const zipFileName = "uploads.zip";
+//   const zipFilePath = path.join(os.tmpdir(), zipFileName); // Store in temporary directory
 
-  // Ensure the folder exists
-  if (!fs.existsSync(folderPath)) {
-    return res.status(404).json({ error: "Folder not found" });
-  }
+//   // Ensure the folder exists
+//   if (!fs.existsSync(folderPath)) {
+//     return res.status(404).json({ error: "Folder not found" });
+//   }
 
-  res.attachment(zipFileName);
-  const archive = archiver("zip", { zlib: { level: 9 } });
-  archive.pipe(res);
+//   res.attachment(zipFileName);
+//   const archive = archiver("zip", { zlib: { level: 9 } });
+//   archive.pipe(res);
 
-  archive.directory(folderPath, false);
-  archive.finalize().catch((err) => {
-    console.error("Error creating zip:", err);
-    res.status(500).json({ error: "Error creating zip file" });
-  });
-});
+//   archive.directory(folderPath, false);
+//   archive.finalize().catch((err) => {
+//     console.error("Error creating zip:", err);
+//     res.status(500).json({ error: "Error creating zip file" });
+//   });
+// });
 
 const uploadsFolder = path.join(__dirname, "uploads");
 
@@ -143,7 +143,7 @@ app.get("/download-images", (req, res) => {
 });
 
 // Routers
-app.use("/api", Router);
+// app.use("/api", Router);
 app.use("/uploads", express.static("uploads"));
 
 app.listen(8080, "0.0.0.0", () => {

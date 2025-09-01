@@ -3,9 +3,10 @@ const { MongoClient } = require("mongodb");
 const MONGO_URI =
   "mongodb+srv://avbigbuddy:nZ4ATPTwJjzYnm20@cluster0.wplpkxz.mongodb.net/RealEstateMain";
 const DB_NAME = "RealEstateMain";
-
-const OLD_DOMAIN = "https://real-esate-oghre.ondigitalocean.app";
-const NEW_DOMAIN = "https://realestatebackend-vjq3.onrender.com";
+// sdsd;
+// const OLD_DOMAIN = "https://real-esate-oghre.ondigitalocean.app";
+const OLD_DOMAIN = "https://realestatebackend-vjq3.onrender.com";
+const NEW_DOMAIN = "https://api.dnsdxb.com";
 
 // Recursively replace old domain in all string fields of an object
 function replaceDomainInObject(obj) {
